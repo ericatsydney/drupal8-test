@@ -1,0 +1,17 @@
+name: xvt_drupal8_test
+description: xvt_drupal8_test
+type: module
+core: 8.x
+package: XVT
+dependencies:
+  - block
+  - field
+  - menu_ui
+  - node
+  - options
+  - path
+  - taxonomy
+  - text
+  - user
+  - views
+version: 8.x-1.0

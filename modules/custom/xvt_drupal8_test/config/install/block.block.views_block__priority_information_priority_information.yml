@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.priority_information
+  module:
+    - views
+  theme:
+    - bartik
+id: views_block__priority_information_priority_information
+theme: bartik
+region: sidebar_first
+weight: -5
+provider: null
+plugin: 'views_block:priority_information-priority_information'
+settings:
+  id: 'views_block:priority_information-priority_information'
+  label: 'Priority Information'
+  provider: views
+  label_display: visible
+  views_label: 'Priority Information'
+  items_per_page: none
+visibility: {  }

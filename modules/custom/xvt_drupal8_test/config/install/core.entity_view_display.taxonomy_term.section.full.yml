@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.taxonomy_term.full
+    - field.field.taxonomy_term.section.field_priority
+    - taxonomy.vocabulary.section
+  module:
+    - options
+id: taxonomy_term.section.full
+targetEntityType: taxonomy_term
+bundle: section
+mode: full
+content:
+  field_priority:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+hidden:
+  description: true
