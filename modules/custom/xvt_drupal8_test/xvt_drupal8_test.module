@@ -14,3 +14,15 @@ function xvt_drupal8_test_node_insert($node) {
   }
 }
 
+/**
+ * Implements hook_preprocess_html().
+ */
+function xvt_drupal8_test_preprocess_html(&$var) {
+  // Get the current uri.
+  $current_uri = \Drupal::request()->getRequestUri();
+  // Check if login page before showing the messages.
+  if ($current_uri === '/user/login') {
+    drupal_set_message(t('This website is using cookies.'), 'status');
+  }
+}
+
