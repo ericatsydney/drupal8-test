@@ -9,7 +9,7 @@
  */
 function xvt_drupal8_test_install() {
   // Create editor.
-  $values = array(
+  $user_info = array(
     'field_title' => 'Mr',
     'name' => 'editor',
     'mail' => 'editor@xvt.com',
@@ -17,22 +17,23 @@ function xvt_drupal8_test_install() {
     'pass' => 'abc123',
     'status' => 1,
   );
-  $account = entity_create('user', $values);
+  $account = entity_create('user', $user_info);
   $account->save();
 
   // Create terms.
-  $termsArray = array(
+  $terms_array = array(
     'Tutorial' => 'very-important',
     'Article' => 'not-important',
     'Guide' => 'important',
   );
   // Loop all the terms to create.
-  foreach($termsArray as $section => $priority) {
-    $term = entity_create('taxonomy_term', [
+  foreach($terms_array as $section => $priority) {
+    $term_value = array(
       'vid' => 'section',
       'name' => $section,
       'field_priority' => $priority,
-    ]);
+    );
+    $term = entity_create('taxonomy_term', $term_value);
     $term->save();
   }
 }
@@ -43,20 +44,20 @@ function xvt_drupal8_test_install() {
 function xvt_drupal8_test_uninstall() {
   // Delete user - editor.
   $user = user_load_by_name('editor');
-  if (!is_bool($user)) {
+  if (is_object($user)) {
     $user->delete();
   }
 
   // Delete terms in section vocabulary.
-  $termsArray = [
+  $terms_array = array(
     'Tutorial',
     'Article',
     'Guide',
-  ];
+  );
   // Loop all the term's name.
-  foreach($termsArray as $termName) {
+  foreach($terms_array as $term_name) {
     // Loop all the term entity.
-    foreach(taxonomy_term_load_multiple_by_name($termName, 'section') as $term) {
+    foreach(taxonomy_term_load_multiple_by_name($term_name, 'section') as $term) {
       $term->delete();
     }
   }
