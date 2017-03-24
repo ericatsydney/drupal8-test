@@ -1,0 +1,63 @@
+<?php
+/**
+ * @file
+ * Create entities when install the module and delete them when uninstall.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function xvt_drupal8_test_install() {
+  // Create editor.
+  $values = array(
+    'field_title' => 'Mr',
+    'name' => 'editor',
+    'mail' => 'editor@xvt.com',
+    'roles' => array('editor'),
+    'pass' => 'abc123',
+    'status' => 1,
+  );
+  $account = entity_create('user', $values);
+  $account->save();
+
+  // Create terms.
+  $termsArray = array(
+    'Tutorial' => 'very-important',
+    'Article' => 'not-important',
+    'Guide' => 'important',
+  );
+  // Loop all the terms to create.
+  foreach($termsArray as $section => $priority) {
+    $term = entity_create('taxonomy_term', [
+      'vid' => 'section',
+      'name' => $section,
+      'field_priority' => $priority,
+    ]);
+    $term->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function xvt_drupal8_test_uninstall() {
+  // Delete user - editor.
+  $user = user_load_by_name('editor');
+  if (!is_bool($user)) {
+    $user->delete();
+  }
+
+  // Delete terms in section vocabulary.
+  $termsArray = [
+    'Tutorial',
+    'Article',
+    'Guide',
+  ];
+  // Loop all the term's name.
+  foreach($termsArray as $termName) {
+    // Loop all the term entity.
+    foreach(taxonomy_term_load_multiple_by_name($termName, 'section') as $term) {
+      $term->delete();
+    }
+  }
+}
