@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * Functions and hooks to implement special handling for xvt page.
+ */
+
+/**
+ * Implements hook_node_insert().
+ */
+function xvt_drupal8_test_node_insert($node) {
+  // Check the content type if page then show the message after creation.
+  if (strtolower($node->type->entity->label()) === 'page') {
+    drupal_set_message(t('You just created a new Page.'), 'status');
+  }
+}
+
